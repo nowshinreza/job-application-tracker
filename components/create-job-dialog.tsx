@@ -1,9 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
 import { Plus } from "lucide-react";
-
-import { createJobApplication } from "@/lib/actions/job-applications";
 import { Button } from "./ui/button";
 import {
   Dialog,
@@ -14,9 +11,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
-import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
+import React, { useState } from "react";
+import { createJobApplication } from "@/lib/actions/job-applications";
 
 interface CreateJobApplicationDialogProps {
   columnId: string;
@@ -41,7 +40,7 @@ export default function CreateJobApplicationDialog({
   const [open, setOpen] = useState<boolean>(false);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     try {
@@ -69,28 +68,22 @@ export default function CreateJobApplicationDialog({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger>
-  <Button
-    variant="outline"
-    className="mb-4 w-full justify-start border-2 border-dashed"
-  >
-    Add Job
-  </Button>
-</DialogTrigger>
-
-      <DialogContent className="flex max-h-[90dvh] w-[calc(100%-1.5rem)] max-w-2xl flex-col gap-0 overflow-hidden p-0 sm:w-full">
-        <DialogHeader className="shrink-0 border-b px-4 py-4 text-left sm:px-6">
-          <DialogTitle>Add Job Application</DialogTitle>
-          <DialogDescription>
-            Track a new job application
-          </DialogDescription>
-        </DialogHeader>
-
-        <form
-          className="flex min-h-0 flex-1 flex-col"
-          onSubmit={handleSubmit}
+        <Button
+          variant="outline"
+          className="w-full mb-4 justify-start text-muted-foreground border-dashed border-2 hover:border-solid hover:bg-muted/50"
         >
-          <div className="flex-1 space-y-4 overflow-y-auto px-4 py-4 sm:px-6">
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <Plus className="mr-2 h-4 w-4" />
+          Add Job
+        </Button>
+      </DialogTrigger>
+      <DialogContent className="max-w-2xl">
+        <DialogHeader>
+          <DialogTitle>Add Job Application</DialogTitle>
+          <DialogDescription>Track a new job application</DialogDescription>
+        </DialogHeader>
+        <form className="space-y-4" onSubmit={handleSubmit}>
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="company">Company *</Label>
                 <Input
@@ -98,14 +91,10 @@ export default function CreateJobApplicationDialog({
                   required
                   value={formData.company}
                   onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      company: e.target.value,
-                    })
+                    setFormData({ ...formData, company: e.target.value })
                   }
                 />
               </div>
-
               <div className="space-y-2">
                 <Label htmlFor="position">Position *</Label>
                 <Input
@@ -113,30 +102,22 @@ export default function CreateJobApplicationDialog({
                   required
                   value={formData.position}
                   onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      position: e.target.value,
-                    })
+                    setFormData({ ...formData, position: e.target.value })
                   }
                 />
               </div>
             </div>
-
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="location">Location</Label>
                 <Input
                   id="location"
                   value={formData.location}
                   onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      location: e.target.value,
-                    })
+                    setFormData({ ...formData, location: e.target.value })
                   }
                 />
               </div>
-
               <div className="space-y-2">
                 <Label htmlFor="salary">Salary</Label>
                 <Input
@@ -144,15 +125,11 @@ export default function CreateJobApplicationDialog({
                   placeholder="e.g., $100k - $150k"
                   value={formData.salary}
                   onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      salary: e.target.value,
-                    })
+                    setFormData({ ...formData, salary: e.target.value })
                   }
                 />
               </div>
             </div>
-
             <div className="space-y-2">
               <Label htmlFor="jobUrl">Job URL</Label>
               <Input
@@ -161,14 +138,10 @@ export default function CreateJobApplicationDialog({
                 placeholder="https://..."
                 value={formData.jobUrl}
                 onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    jobUrl: e.target.value,
-                  })
+                  setFormData({ ...formData, jobUrl: e.target.value })
                 }
               />
             </div>
-
             <div className="space-y-2">
               <Label htmlFor="tags">Tags (comma-separated)</Label>
               <Input
@@ -176,61 +149,44 @@ export default function CreateJobApplicationDialog({
                 placeholder="React, Tailwind, High Pay"
                 value={formData.tags}
                 onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    tags: e.target.value,
-                  })
+                  setFormData({ ...formData, tags: e.target.value })
                 }
               />
             </div>
-
             <div className="space-y-2">
               <Label htmlFor="description">Description</Label>
               <Textarea
                 id="description"
                 rows={3}
                 placeholder="Brief description of the role..."
-                className="min-h-24 resize-y"
                 value={formData.description}
                 onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    description: e.target.value,
-                  })
+                  setFormData({ ...formData, description: e.target.value })
                 }
               />
             </div>
-
             <div className="space-y-2">
               <Label htmlFor="notes">Notes</Label>
               <Textarea
                 id="notes"
                 rows={4}
-                className="min-h-28 resize-y"
                 value={formData.notes}
                 onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    notes: e.target.value,
-                  })
+                  setFormData({ ...formData, notes: e.target.value })
                 }
               />
             </div>
           </div>
 
-          <DialogFooter className="shrink-0 border-t bg-background px-4 py-4 sm:flex-row sm:px-6">
+          <DialogFooter>
             <Button
               type="button"
               variant="outline"
-              className="w-full sm:w-auto"
               onClick={() => setOpen(false)}
             >
               Cancel
             </Button>
-
-            <Button type="submit" className="w-full sm:w-auto">
-              Add Application
-            </Button>
+            <Button type="submit">Add Application</Button>
           </DialogFooter>
         </form>
       </DialogContent>
