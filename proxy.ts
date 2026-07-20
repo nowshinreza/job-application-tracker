@@ -4,8 +4,10 @@ import { getSession } from "./lib/auth/auth";
 export default async function proxy(request: NextRequest) {
   const session = await getSession();
 
-  const isSignInPage = request.nextUrl.pathname.startsWith("/sign-in");
-  const isSignUpPage = request.nextUrl.pathname.startsWith("/sign-up");
+  const pathname = request.nextUrl.pathname;
+
+  const isSignInPage = pathname.startsWith("/sign-in");
+  const isSignUpPage = pathname.startsWith("/sign-up");
 
   if ((isSignInPage || isSignUpPage) && session?.user) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
@@ -13,3 +15,7 @@ export default async function proxy(request: NextRequest) {
 
   return NextResponse.next();
 }
+
+export const config = {
+  matcher: ["/sign-in", "/sign-up", "/dashboard/:path*"],
+};
