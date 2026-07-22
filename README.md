@@ -1,84 +1,55 @@
 # Job Application Tracker
 
-A full-stack job application tracking system built with Next.js to help job seekers organize and manage their job search efficiently. The application provides a modern Kanban board interface for tracking applications across different stages of the hiring process, making it easy to organize, update, and monitor progress from application to offer.
+A full-stack job application management platform built with Next.js that helps users organize and track their job search through an interactive Kanban board. Users can manage applications across different hiring stages with authentication, database integration, and drag-and-drop functionality.
 
 ## Features
 
-- Secure user authentication
-- Kanban board with drag-and-drop functionality
+- User authentication and session management
+- Interactive Kanban board with drag-and-drop support
 - Create, update, and delete job applications
 - Track applications through different hiring stages
-- Store company, position, location, salary, and notes
-- Search and filter job applications
-- Responsive design for desktop and mobile devices
-- Real-time updates for a seamless user experience
+- MongoDB database integration using Mongoose
+- Responsive and modern user interface
+- Server-side data handling with Next.js App Router
+
+## Tech Stack
+
+- Next.js 16 (App Router)
+- TypeScript
+- React 19
+- Tailwind CSS 4
+- MongoDB
+- Mongoose
+- Better Auth
+- dnd-kit
+- Radix UI
+- Lucide React
 
 ## Application Workflow
 
 ```
-Wishlist
-    ↓
-Applied
-    ↓
-Interview
-    ↓
-Assessment
-    ↓
-Offer
-    ↓
-Hired / Rejected
-```
-
-## Tech Stack
-
-### Frontend
-- Next.js
-- React
-- TypeScript
-- Tailwind CSS
-
-### Backend
-- Next.js Server Actions
-- API Routes
-
-### Database
-- PostgreSQL
-- Prisma ORM
-
-### Authentication
-- Clerk
-
-### Deployment
-- Vercel
-
-## Project Structure
-
-```text
-.
-├── app/
-├── components/
-├── actions/
-├── prisma/
-├── lib/
-├── public/
-├── types/
-└── utils/
+Wishlist → Applied → Interviewing → Offer → Rejected
 ```
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 20+
-- PostgreSQL
-- npm, pnpm, or yarn
+- Node.js 18+
+- MongoDB database
+- npm, yarn, pnpm, or bun
 
 ### Installation
 
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/job-application-tracker.git
+git clone https://github.com/nowshinreza/job-application-tracker.git
+```
+
+Navigate to the project directory:
+
+```bash
 cd job-application-tracker
 ```
 
@@ -88,18 +59,10 @@ Install dependencies:
 npm install
 ```
 
-Create a `.env` file:
+Create a `.env.local` file in the root directory:
 
 ```env
-DATABASE_URL=
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
-CLERK_SECRET_KEY=
-```
-
-Run database migrations:
-
-```bash
-npx prisma migrate dev
+MONGODB_URI=your_mongodb_connection_string
 ```
 
 Start the development server:
@@ -108,18 +71,30 @@ Start the development server:
 npm run dev
 ```
 
-Open your browser and navigate to:
+Open your browser:
 
 ```
 http://localhost:3000
 ```
 
+## Project Structure
+
+```
+job-application-tracker/
+├── app/              # Next.js App Router pages and routes
+├── components/       # Reusable React components
+├── lib/              # Database, authentication, actions, utilities
+├── models/           # Mongoose database models
+├── public/           # Static assets
+└── scripts/          # Database utility scripts
+```
+
 ## Future Improvements
 
-- Calendar integration for interview scheduling
+- Application analytics dashboard
+- Interview scheduling system
+- Email notifications
 - Resume and cover letter management
-- Email reminders
-- Analytics dashboard
-- Application statistics
-- Company contact management
-- Notes and activity history
+- Advanced search and filtering
+- Application status history
+
